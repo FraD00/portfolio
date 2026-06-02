@@ -1,0 +1,14 @@
+# Editor / local tooling
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node (not used now, but just in case)
+node_modules/
+
+# Note di progetto locali (non vanno nel repo pubblico)
+Portfolio.md

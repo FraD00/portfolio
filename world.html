@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Francesco d'Ecclesiis, Junior Game Developer — explore my work inside an interactive first-person 3D room, built from scratch with Three.js.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Francesco d'Ecclesiis — 3D Portfolio</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fragamesdev.com/world">
+    <meta property="og:title" content="Francesco d'Ecclesiis — Interactive 3D Portfolio">
+    <meta property="og:description" content="Francesco d'Ecclesiis, Junior Game Developer — explore my work inside an interactive first-person 3D room, built from scratch with Three.js.">
+    <meta property="og:image" content="https://fragamesdev.com/Media/Portfolio3D.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="world.css?v=65">
+
+    <!-- IMPORT MAP
+         Dice al browser dove trovare "three" quando world.js scrive
+         import ... from 'three'. Cosi' usiamo Three.js senza nessun
+         tool di build (niente npm, niente bundler): resta un sito statico. -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Schermata iniziale: il primo click serve al browser per "catturare"
+         il mouse. Lo trasformiamo nel momento "apri gli occhi". -->
+    <div id="startScreen">
+        <p>click to open your eyes</p>
+    </div>
+
+    <!-- Palpebre per l'effetto blink all'avvio. -->
+    <div id="blink">
+        <div class="eyelid eyelid-top"></div>
+        <div class="eyelid eyelid-bottom"></div>
+    </div>
+
+    <!-- Mirino al centro dello schermo. -->
+    <div id="crosshair"></div>
+
+    <!-- Riquadri guida impilati: comandi ([LMB]/[E]) sopra, battute/messaggi sotto. -->
+    <div id="tipStack">
+        <div id="lookTip"></div>
+        <div id="tooltip"></div>
+    </div>
+
+    <!-- Interfaccia della TV: compare quando la camera e' "dentro" lo schermo.
+         Menu con le 3 voci + le pagine dei progetti (in iframe). -->
+    <div id="tvUi" class="hidden">
+
+        <!-- MENU -->
+        <div id="tvMenu">
+            <h1 class="tv-title">Francesco d'Ecclesiis — Game Developer</h1>
+            <ul class="tv-items">
+                <li class="tv-item" data-page="CrazyCoffee.html">Crazy Coffee</li>
+                <li class="tv-item" data-page="InsectsMustDie.html">Insect Must Die</li>
+                <li class="tv-item" data-page="Portfolio3D.html">3D Portfolio</li>
+                <li class="tv-item" data-page="AboutMe.html">About Me</li>
+            </ul>
+            <p class="tv-hint">W/S o frecce per scegliere · Invio per aprire</p>
+        </div>
+
+        <!-- PAGINA: iframe della pagina esistente, in "tv-mode" -->
+        <div id="tvPage" class="hidden">
+            <iframe id="tvFrame" title="Project page"></iframe>
+        </div>
+
+        <!-- Comandi TV -->
+        <button id="tvBack" class="tv-btn hidden">← Back</button>
+        <button id="tvExit" class="tv-btn">✕ Exit TV</button>
+    </div>
+
+    <!-- type="module" e' necessario per poter usare gli import dell'import map. -->
+    <script type="module" src="world.js?v=115"></script>
+
+</body>
+</html>

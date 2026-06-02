@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Crazy Coffee — a cozy coffee-shop simulator built solo in Unreal Engine 5. A project by Francesco d'Ecclesiis.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Crazy Coffee — Francesco d'Ecclesiis</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fragamesdev.com/CrazyCoffee">
+    <meta property="og:title" content="Crazy Coffee — Francesco d'Ecclesiis">
+    <meta property="og:description" content="Crazy Coffee — a cozy coffee-shop simulator built solo in Unreal Engine 5. A project by Francesco d'Ecclesiis.">
+    <meta property="og:image" content="https://fragamesdev.com/Media/Portfolio3D.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html" class="logo">Francesco d'Ecclesiis - Junior Game Developer</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="CrazyCoffee.html" class="active">Crazy Coffee</a></li>
+            <li><a href="InsectsMustDie.html">Insect Must Die</a></li>
+            <li><a href="Portfolio3D.html">3D Portfolio</a></li>
+            <li><a href="AboutMe.html">About Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- PROJECT HEADER -->
+        <div class="project-header">
+            <h1>Crazy Coffee</h1>
+            <div class="badges">
+                <span class="badge engine">Unreal Engine 5</span>
+                <span class="badge">Cozy Sim</span>
+                <span class="badge">Solo project</span>
+                <span class="badge">2025 · In development</span>
+            </div>
+            <p class="tldr">A cozy coffee-shop sim with a twist: every customer has a personality and a limited tolerance for jokes — read them right or lose them. Built solo in UE5 (Blueprints + C++).</p>
+        </div>
+
+        <!-- TRAILER -->
+        <div class="video-wrapper">
+            <video controls preload="metadata" poster="Media/CoffeeMainMenu.png">
+                <source src="Media/CoffeeTrailer.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- TEXT BLOCK -->
+        <div class="text-block">
+
+            <h2>About the Game</h2>
+            <p>
+                Crazy Coffee is a cozy shop-management game with a twist: you run a coffee shop and serve customers, but each one has a distinct personality and only tolerates so many jokes. Read their mood, balance your banter, and keep them happy — every customer needs a different approach.
+            </p>
+
+            <h2>My Role</h2>
+            <p>
+                Solo developer: design, programming, and systems are all mine. I build the core gameplay in Unreal Engine 5 — Blueprints for fast iteration, C++ where it counts (specific features and optimisation). Here's what's already working:
+            </p>
+            
+            <div class="project-hero" onclick="openLightbox('Media/CoffeeOverview.png')">
+                <img src="Media/CoffeeOverview.png" alt="Crazy Coffee Screenshot">
+            </div>
+
+            <h2>Key Features</h2>
+            <p>
+                This project is built around several system and features, and more will be added as the development continues. The most important systems currently implemented are:
+                <ul>
+                    <li>A movement system with walking/running/jumping/crouching mechanics, with smooth transitions and animations.</li>
+                    <li>A customer queue system, where customers enter the shop, go to a predefined slot position, and wait for service. When the first customer is served, they leave the shop, and the queue moves forward.</li>
+                </ul>
+            </p>
+
+                <div class="project-hero" onclick="openLightbox('Media/CoffeeSlotSystem.png')">
+                    <img src="Media/CoffeeSlotSystem.png" alt="Crazy Coffee Screenshot">
+                </div>
+                <div class="project-hero" onclick="openLightbox('Media/CoffeeAdvanceQueue.png')">
+                    <img src="Media/CoffeeAdvanceQueue.png" alt="Crazy Coffee Screenshot">
+                </div>
+            
+            <p>
+                Future features that will be implemented this year include:
+                <ul>
+                    <li>A variety of customers, each with their own unique traits and preferences.</li>
+                    <li>A dialogue system, where the player will have to pick between different dialogue options basing his answers on the customer's personality and the situation.</li>
+                    <li>Customer's personalities using a Behavior Tree.</li>
+                    <li>Economy system for managing money and business aspects such as bills/rent.</li>
+                </ul>
+            </p>
+
+        </div>
+    </main>
+    <!-- FOOTER -->
+    <footer>
+        <a href="mailto:fdecclesiisbiz@gmail.com" class="email">fdecclesiisbiz@gmail.com</a>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/francesco-d-ecclesiis-a7b0973b8/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/FraD00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/FraGamesDev" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </footer>
+
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Se la pagina e' aperta dentro la TV (?view=tv), nascondi nav e footer.
+        if (new URLSearchParams(location.search).get('view') === 'tv') {
+            document.body.classList.add('tv-mode');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="About Francesco d'Ecclesiis — Junior Game Developer based in London. My background, skills and the tools I work with.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>About Me — Francesco d'Ecclesiis</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fragamesdev.com/AboutMe">
+    <meta property="og:title" content="About — Francesco d'Ecclesiis">
+    <meta property="og:description" content="About Francesco d'Ecclesiis — Junior Game Developer based in London. My background, skills and the tools I work with.">
+    <meta property="og:image" content="https://fragamesdev.com/Media/Portfolio3D.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html" class="logo">Francesco d'Ecclesiis - Junior Game Developer</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="CrazyCoffee.html">Crazy Coffee</a></li>
+            <li><a href="InsectsMustDie.html">Insect Must Die</a></li>
+            <li><a href="Portfolio3D.html">3D Portfolio</a></li>
+            <li><a href="AboutMe.html" class="active">About Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <div class="about-container">
+
+            <!-- PROFILE PICTURE -->
+            <div class="profile-card" onclick="openLightbox('Media/PROFILO.jpg')" style="cursor:pointer;">
+                <img src="Media/PROFILO.jpg" alt="Francesco d'Ecclesiis Profile Picture">
+            </div>
+
+            <!-- BIO TEXT -->
+            <div class="about-text">
+                <h1>Francesco d'Ecclesiis</h1>
+                <p class="role">Junior Game Developer · London, UK</p>
+
+                <p>
+                    Hello! I'm Francesco, a passionate junior game developer with a love for creating immersive and engaging gaming experiences. My main focus is on coding,
+                    but I also enjoy game design and level design. I have experience working with both Unity and Unreal Engine, and I'm always eager to learn new tools and techniques to improve my skills.
+                </p>
+
+                <p>
+                    I'm currently a second-year BSc Games Development student at the University of Greenwich (London). This very portfolio has a 3D, first-person version I built from scratch with Three.js — feel free to explore it. I'm looking for a Junior Developer role where I can contribute and keep learning, so don't hesitate to reach out!
+                </p>
+
+                <div class="btn-row">
+                    <a href="Francesco_dEcclesiis_CV.pdf" class="btn" target="_blank" rel="noopener">Download CV (PDF)</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- SKILLS -->
+        <div class="skills">
+            <h2>Skills &amp; Tools</h2>
+            <p class="skill-group"><strong>Engines &amp; languages:</strong> Unity &amp; C# (proficient) &nbsp;·&nbsp; Unreal Engine &amp; C++ (basic) &nbsp;·&nbsp; JavaScript &amp; Three.js (beginner) &nbsp;·&nbsp; HTML &amp; CSS (beginner)</p>
+            <p class="skill-group"><strong>Tools:</strong> Visual Studio &nbsp;·&nbsp; Rider &nbsp;·&nbsp; Git &amp; GitHub</p>
+            <p class="skill-group"><strong>Focus:</strong> gameplay systems, player feel, prototyping, performance optimisation</p>
+            <p class="skill-group"><strong>Languages:</strong> Italian (native) &nbsp;·&nbsp; English (fluent)</p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <a href="mailto:fdecclesiisbiz@gmail.com" class="email">fdecclesiisbiz@gmail.com</a>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/francesco-d-ecclesiis-a7b0973b8/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/FraD00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/FraGamesDev" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </footer>
+
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Se la pagina e' aperta dentro la TV (?view=tv), nascondi nav e footer.
+        if (new URLSearchParams(location.search).get('view') === 'tv') {
+            document.body.classList.add('tv-mode');
+        }
+    </script>
+
+</body>
+</html>

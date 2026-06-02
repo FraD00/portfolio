@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Insect Must Die — a complete 2D platformer built solo in Unity and C#. A project by Francesco d'Ecclesiis.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Insect Must Die — Francesco d'Ecclesiis</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fragamesdev.com/InsectsMustDie">
+    <meta property="og:title" content="Insect Must Die — Francesco d'Ecclesiis">
+    <meta property="og:description" content="Insect Must Die — a complete 2D platformer built solo in Unity and C#. A project by Francesco d'Ecclesiis.">
+    <meta property="og:image" content="https://fragamesdev.com/Media/Portfolio3D.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html" class="logo">Francesco d'Ecclesiis - Junior Game Developer</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="CrazyCoffee.html">Crazy Coffee</a></li>
+            <li><a href="InsectsMustDie.html" class="active">Insect Must Die</a></li>
+            <li><a href="Portfolio3D.html">3D Portfolio</a></li>
+            <li><a href="AboutMe.html">About Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- PROJECT HEADER -->
+        <div class="project-header">
+            <h1>Insect Must Die</h1>
+            <div class="badges">
+                <span class="badge engine">Unity · C#</span>
+                <span class="badge">2D Platformer</span>
+                <span class="badge">Solo project</span>
+                <span class="badge">2024</span>
+            </div>
+            <p class="tldr">A complete 2D platformer built solo in Unity: clear waves of insects across levels of rising difficulty, using a gun and a range of power-ups. Every system coded from scratch in C#.</p>
+        </div>
+
+        <!-- TRAILER -->
+        <div class="video-wrapper">
+            <video controls preload="metadata" poster="Media/InsectsMenu.png">
+                <source src="Media/InsectTrailer.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <!-- TEXT BLOCK -->
+        <div class="text-block">
+
+            <h2>About the Game</h2>
+            <p>
+                Insect Must Die is a complete 2D platformer built in Unity. It opens with a dialogue intro covering the controls and story, then runs through a series of levels of scaling difficulty where you clear waves of insect enemies with a gun and a range of power-ups.
+            </p>
+
+            <h2>My Role</h2>
+            <p>
+                Built entirely by me — concept, design, and programming. I wrote every system in C#: player movement, directional shooting combat, enemy waves, and level progression, using Unity's tools for levels and assets. A complete, self-contained game loop built from scratch.
+            </p>
+            <div class="project-hero" onclick="openLightbox('Media/BaseScreen.png')">
+                <img src="Media/BaseScreen.png" alt="Insects Must Die Screenshot">
+            </div>
+
+            <h2>Key Features</h2>
+            <p>
+                The combat system includes a gun that shoots projectiles, checking what direction the player is facing and instantiating the bullet accordingly, it also plays particles and sound effects when firing. 
+            </p>
+            <div class="project-hero" onclick="openLightbox('Media/InsectsCode.png')">
+                <img src="Media/InsectsCode.png" alt="Insects Must Die Screenshot">
+            </div>
+              <p>
+                Levels progression is managed by a level manager script that distributes the enemies to the spawner points, and checks when the player has defeated all the enemies to unlock the next level. 
+                The manager also includes a reset function called in Start, so that when the player dies and the level restarts, all enemies and stats return to their default values.
+            </p>
+            <div class="project-hero" onclick="openLightbox('Media/InsectsLevelCode.png')">
+                <img src="Media/InsectsLevelCode.png" alt="Insects Must Die Screenshot">
+            </div>
+
+        </div>
+    </main>
+    <!-- FOOTER -->
+    <footer>
+        <a href="mailto:fdecclesiisbiz@gmail.com" class="email">fdecclesiisbiz@gmail.com</a>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/francesco-d-ecclesiis-a7b0973b8/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/FraD00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/FraGamesDev" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </footer>
+
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Se la pagina e' aperta dentro la TV (?view=tv), nascondi nav e footer.
+        if (new URLSearchParams(location.search).get('view') === 'tv') {
+            document.body.classList.add('tv-mode');
+        }
+    </script>
+
+</body>
+</html>

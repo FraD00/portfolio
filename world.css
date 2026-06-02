@@ -1,0 +1,285 @@
+/* ===========================================================
+   WORLD.CSS — stile della pagina 3D (overlay sopra il canvas)
+   Il 3D vero e proprio lo disegna Three.js dentro un <canvas>.
+   Qui vestiamo solo gli elementi HTML che stanno SOPRA il 3D:
+   schermata iniziale, effetto blink, mirino.
+=========================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;            /* niente barre di scorrimento: il mondo riempie tutto */
+    background: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Il canvas creato da Three.js: "block" evita lo spazio bianco sotto di esso. */
+canvas {
+    display: block;
+}
+
+/* ===========================================================
+   SCHERMATA INIZIALE ("click to open your eyes")
+   Copre tutto finche' l'utente non clicca. Il click e' obbligatorio
+   perche' il browser blocca il mouse (pointer lock) solo dopo un gesto.
+=========================================================== */
+#startScreen {
+    position: fixed;
+    inset: 0;                    /* top/right/bottom/left = 0: copre lo schermo */
+    z-index: 100;                /* sopra tutto il resto */
+    background: #000;
+    color: #F1F1F1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+}
+
+/* Leggero "respiro" del testo, per invitare al click. */
+#startScreen p {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.45; }
+    50%      { opacity: 1; }
+}
+
+/* Classe che nasconde la schermata una volta partiti. */
+#startScreen.hidden {
+    display: none;
+}
+
+/* ===========================================================
+   EFFETTO BLINK (palpebre che si aprono)
+   Due barre nere: una dall'alto, una dal basso. Di default sono
+   fuori schermo (aperte). Quando aggiungiamo la classe .play partono
+   chiuse e si aprono con un piccolo battito di ciglia in mezzo.
+=========================================================== */
+#blink {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;        /* non blocca i click: e' solo visivo */
+}
+
+.eyelid {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: #000;
+}
+
+.eyelid-top    { top: 0;    transform: translateY(-100%); }   /* default: nascosta sopra */
+.eyelid-bottom { bottom: 0; transform: translateY(100%); }    /* default: nascosta sotto */
+
+#blink.play .eyelid-top    { animation: openTop 1.6s ease-out forwards; }
+#blink.play .eyelid-bottom { animation: openBottom 1.6s ease-out forwards; }
+
+@keyframes openTop {
+    0%   { transform: translateY(0); }      /* chiusa (copre meta' alta) */
+    25%  { transform: translateY(-55%); }   /* si apre */
+    40%  { transform: translateY(0); }      /* battito: si richiude un attimo */
+    100% { transform: translateY(-100%); }  /* del tutto aperta */
+}
+
+@keyframes openBottom {
+    0%   { transform: translateY(0); }
+    25%  { transform: translateY(55%); }
+    40%  { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+}
+
+/* ===========================================================
+   MIRINO (puntino al centro)
+   Serve come punto di mira; piu' avanti lo useremo per capire
+   quale oggetto stiamo guardando. Visibile solo mentre giochiamo.
+=========================================================== */
+#crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;       /* lo centra esattamente */
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    z-index: 40;
+    display: none;               /* nascosto finche' non giochiamo */
+    pointer-events: none;
+}
+
+body.playing #crosshair {
+    display: block;
+}
+
+/* Quando miri qualcosa di interagibile: il puntino diventa un anello giallo caldo. */
+body.playing #crosshair.active {
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    background: transparent;
+    border: 2px solid rgba(255, 220, 120, 0.95);
+}
+
+/* ===========================================================
+   TOOLTIP (messaggi guida: "look around", "WASD", ecc.)
+   Compare in basso al centro, con una dissolvenza morbida.
+=========================================================== */
+/* Contenitore: il riquadro dei comandi ([LMB]/[E]) sta SOPRA quello delle battute/messaggi. */
+#tipStack {
+    position: fixed;
+    left: 50%;
+    bottom: 18%;
+    transform: translateX(-50%);
+    z-index: 45;                 /* sotto il blink (50): le palpebre lo coprono e poi lo rivelano */
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
+}
+
+#lookTip,
+#tooltip {
+    background: rgba(255, 240, 150, 0.95);   /* giallo chiaro */
+    color: #000000;                           /* testo nero */
+    font-family: 'Nunito', 'Segoe UI', sans-serif;   /* tondeggiante e molto leggibile */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 6px;
+    text-align: center;
+    display: none;               /* nascosti non occupano spazio: i due riquadri si impilano puliti */
+}
+
+#tooltip {
+    padding: 20px 33px;                       /* +10% rispetto a 18/30 */
+    font-size: 1.815rem;                      /* la battuta / il messaggio (+10%) */
+}
+
+#lookTip {
+    padding: 13px 26px;                       /* +10% rispetto a 12/24 */
+    font-size: 1.32rem;                       /* il comando, un filo piu' piccolo (+10%) */
+}
+
+#lookTip.show,
+#tooltip.show {
+    display: block;
+    animation: tipFadeIn 0.3s ease;           /* compare con una piccola dissolvenza */
+}
+
+@keyframes tipFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ===========================================================
+   TV UI (menu + pagine "dentro" la TV)
+   Overlay a tutto schermo che compare quando entri nella TV.
+=========================================================== */
+#tvUi {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    background: #0c0c0c;
+    color: #F1F1F1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#tvUi.hidden {
+    display: none;
+}
+
+/* --- MENU --- */
+#tvMenu {
+    text-align: center;
+}
+
+#tvMenu.hidden {
+    display: none;
+}
+
+.tv-title {
+    color: #3A7D44;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+}
+
+.tv-items {
+    list-style: none;
+}
+
+.tv-item {
+    font-size: 1.5rem;
+    padding: 12px 40px;
+    margin: 6px auto;
+    color: #999;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+/* Voce selezionata (tastiera) o sotto il mouse */
+.tv-item.selected,
+.tv-item:hover {
+    color: #FFFFFF;
+    border-color: #3A7D44;
+}
+
+.tv-hint {
+    margin-top: 40px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* --- PAGINA (iframe) --- */
+#tvPage {
+    position: absolute;
+    inset: 0;
+}
+
+#tvPage.hidden {
+    display: none;
+}
+
+#tvFrame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #222222;
+}
+
+/* --- Bottoni TV (Back / Exit) --- */
+.tv-btn {
+    position: absolute;
+    z-index: 61;
+    background: rgba(0, 0, 0, 0.6);
+    color: #FFFFFF;
+    border: 1px solid #3A7D44;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.tv-btn.hidden {
+    display: none;
+}
+
+#tvBack { top: 20px; left: 20px; }
+#tvExit { top: 20px; right: 20px; }

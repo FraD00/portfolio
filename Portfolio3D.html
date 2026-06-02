@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive 3D Portfolio — a first-person 3D version of my portfolio, built from scratch with Three.js. By Francesco d'Ecclesiis.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Interactive 3D Portfolio — Francesco d'Ecclesiis</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fragamesdev.com/Portfolio3D">
+    <meta property="og:title" content="Interactive 3D Portfolio — Francesco d'Ecclesiis">
+    <meta property="og:description" content="Interactive 3D Portfolio — a first-person 3D version of my portfolio, built from scratch with Three.js. By Francesco d'Ecclesiis.">
+    <meta property="og:image" content="https://fragamesdev.com/Media/Portfolio3D.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html" class="logo">Francesco d'Ecclesiis - Junior Game Developer</a>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="CrazyCoffee.html">Crazy Coffee</a></li>
+            <li><a href="InsectsMustDie.html">Insect Must Die</a></li>
+            <li><a href="Portfolio3D.html" class="active">3D Portfolio</a></li>
+            <li><a href="AboutMe.html">About Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HERO IMAGE -->
+        <div class="project-hero" onclick="openLightbox('Media/Portfolio3D.png')">
+            <img src="Media/Portfolio3D.png" alt="Interactive 3D Portfolio Screenshot">
+        </div>
+
+        <!-- PROJECT HEADER -->
+        <div class="project-header">
+            <h1>Interactive 3D Portfolio</h1>
+            <div class="badges">
+                <span class="badge engine">Three.js · JavaScript</span>
+                <span class="badge">WebGL / 3D</span>
+                <span class="badge">Solo project</span>
+                <span class="badge">2025</span>
+            </div>
+            <p class="tldr">This portfolio has a first-person 3D version, built from scratch with Three.js: you wake up in a living room, walk around, and use the TV to browse my projects. No game engine, no build step — just JavaScript. (On desktop, you're probably looking at it right now.)</p>
+        </div>
+
+        <!-- TEXT BLOCK -->
+        <div class="text-block">
+
+            <h2>About the Project</h2>
+            <p>
+                I wanted a portfolio that was itself a demo of what I do. So, on desktop, the site drops you into a 3D room in first person: you explore, interact with objects, and the TV acts as the "browser" that opens these very project pages. The content lives in one place — it's just presented inside the world.
+            </p>
+
+            <h2>How I Built It</h2>
+            <p>
+                Everything is custom JavaScript on top of Three.js, loaded from a CDN with zero build tools. The main systems I wrote:
+            </p>
+            <ul>
+                <li><strong>First-person controls</strong> — mouse-look via the Pointer Lock API, WASD movement, and simple AABB collision against the furniture.</li>
+                <li><strong>Raycasting interactions</strong> — a ray from the centre of the screen detects what you're looking at and shows context tooltips ([E] grab, [LMB] interact / sit / use).</li>
+                <li><strong>A small state machine</strong> drives the flow: waking up on the sofa, standing, exploring, sitting, and zooming into the TV.</li>
+                <li><strong>The TV as a browser</strong> — aiming at the TV with the remote zooms in and opens a menu that loads these project pages, so the 3D world and the classic site share the same content.</li>
+                <li><strong>Reactive objects</strong> — grabbable items, an openable book, a lamp you can switch on, paintings you can rotate, and other small touches that respond to the player.</li>
+            </ul>
+
+            <p>
+                It's the project I'm most proud of for what it shows beyond a single game: initiative, 3D and web fundamentals, and building reactive systems from scratch.
+            </p>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <a href="mailto:fdecclesiisbiz@gmail.com" class="email">fdecclesiisbiz@gmail.com</a>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/francesco-d-ecclesiis-a7b0973b8/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/FraD00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/FraGamesDev" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Se la pagina e' aperta dentro la TV (?view=tv), nascondi nav e footer.
+        if (new URLSearchParams(location.search).get('view') === 'tv') {
+            document.body.classList.add('tv-mode');
+        }
+    </script>
+
+</body>
+</html>

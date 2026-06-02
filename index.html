@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Francesco d'Ecclesiis, Junior Game Developer — games made in Unity and Unreal Engine, plus an interactive 3D portfolio built with Three.js.">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>Francesco d'Ecclesiis — Game Developer</title>
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fragamesdev.com/">
+    <meta property="og:title" content="Francesco d'Ecclesiis — Game Developer">
+    <meta property="og:description" content="Portfolio of Francesco d'Ecclesiis, Junior Game Developer — games made in Unity and Unreal Engine, plus an interactive 3D portfolio built with Three.js.">
+    <meta property="og:image" content="https://fragamesdev.com/Media/Portfolio3D.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Da desktop si va all'esperienza 3D (world.html); da mobile/touch resta
+         il sito classico (questa pagina). Lo facciamo subito, prima di disegnare
+         la pagina, cosi' su desktop non si vede un "lampo" del sito classico. -->
+    <script>
+        var isMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 900;
+        if (!isMobile) {
+            window.location.replace('world.html');
+        }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="index.html" class="logo">Francesco d'Ecclesiis - Junior Game Developer</a>
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="CrazyCoffee.html">Crazy Coffee</a></li>
+            <li><a href="InsectsMustDie.html">Insect Must Die</a></li>
+            <li><a href="Portfolio3D.html">3D Portfolio</a></li>
+            <li><a href="AboutMe.html">About Me</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- GAMES TRAILER -->
+        <div class="video-wrapper">
+            <video controls autoplay muted loop>
+        <source src="Media/TrailerGames.mp4" type="video/mp4">
+        </video>
+        </div>
+
+        <!-- PROJECTS -->
+        <p class="section-title">Projects</p>
+        <div class="projects-grid">
+
+            <!-- CRAZY COFFEE -->
+            <a href="CrazyCoffee.html" class="project-card">
+                <div class="card-image">
+                    <img src = "Media/CoffeeBehindCounter.png" alt="Crazy Coffee Screenshot">
+                </div>
+                <div class="card-body">
+                    <h2>Crazy Coffee</h2>
+                    <p>Cozy coffee-shop sim with a personality twist · UE5</p>
+                    <span class="card-tag">Go To Project →</span>
+                </div>
+            </a>
+
+            <!-- INSECTS MUST DIE -->
+            <a href="InsectsMustDie.html" class="project-card">
+                <div class="card-image">
+                  <img src = "Media/BaseScreen.png" alt="Insects Must Die Screenshot">
+                </div>
+                <div class="card-body">
+                    <h2>Insect Must Die</h2>
+                    <p>2D platformer built solo in Unity &amp; C#</p>
+                    <span class="card-tag">Go To Project →</span>
+                </div>
+            </a>
+
+            <!-- INTERACTIVE 3D PORTFOLIO -->
+            <a href="Portfolio3D.html" class="project-card">
+                <div class="card-image">
+                    <img src="Media/Portfolio3D.png" alt="Interactive 3D Portfolio Screenshot">
+                </div>
+                <div class="card-body">
+                    <h2>Interactive 3D Portfolio</h2>
+                    <p>This very site, in first-person 3D — built from scratch with Three.js</p>
+                    <span class="card-tag">Go To Project →</span>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <a href="mailto:fdecclesiisbiz@gmail.com" class="email">fdecclesiisbiz@gmail.com</a>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/francesco-d-ecclesiis-a7b0973b8/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/FraD00" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/FraGamesDev" target="_blank" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>
