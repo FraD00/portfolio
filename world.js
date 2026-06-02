@@ -89,8 +89,8 @@ loadSound('navBlip', 'BlipNav.mp3', false, 0.5);
 loadSound('zoomIn', 'ZoomOnTV.mp3', false, 0.7);
 loadSound('zoomOut', 'ZoomOutTV.mp3', false, 0.7);
 loadSound('radio', 'Lo-Fi.mp3', true, 0.45);
-loadSound('tvStatic', 'TVStatic.mp3', true, 0.115);   // -20% + altro -20%
-loadSound('footsteps', 'WalkingWood.mp3', true, 0.45, 1.15);   // camminata +15% di velocita'
+loadSound('tvStatic', 'TVStatic.mp3', true, 0.104);   // statica TV: abbassata piu' volte (-20%, -20%, -10%)
+loadSound('footsteps', 'WalkingWood.mp3', true, 0.38, 1.265);   // camminata: volume -15%, velocita' +15% poi +10%
 
 // Suono singolo (riparte da capo a ogni richiamo).
 function playSound(name) {
@@ -585,8 +585,9 @@ let gameState = 'SEATED';        // SEATED -> STANDING_UP -> EXPLORE -> TV_ZOOM 
 // Interazione (mira al centro dello schermo).
 const raycaster = new THREE.Raycaster();
 const SCREEN_CENTER = new THREE.Vector2(0, 0);   // (0,0) = centro schermo
-const GRAB_DISTANCE = 1.9261;     // quanto vicino bisogna essere per raccogliere/sedersi/interagire (aumentato del 3%)
+const GRAB_DISTANCE = 1.9261;     // quanto vicino bisogna essere per raccogliere/interagire (aumentato del 3%)
 const DROP_DISTANCE = GRAB_DISTANCE * 1.15;   // per POSARE un oggetto: un filo piu' lungo del grab (+15%)
+const SIT_DISTANCE = 3.0;         // per SEDERSI: soglia piu' lunga del grab, cosi' si mira tutto il divano (schienale incluso, che e' piu' lontano e in alto)
 let remotePhase = false;          // fase "telecomando" (10s) con battute condizionali
 let remotePhaseTimer = null;      // timer dei 10s (lo annulliamo se il player interagisce prima)
 let tempTipQueue = [];            // coda dei tooltip temporanei: ognuno finisce prima del successivo
@@ -828,6 +829,18 @@ function dropHeldObject() {
             breakRemote(g.object);
         }
     }
+}
+
+// Posa il telecomando dov'era (sul tavolino), SENZA contarlo come "drop" e senza romperlo.
+// Lo chiamiamo all'uscita dalla TV: cosi' il player ha subito le mani libere per gli altri oggetti.
+function putAwayRemote() {
+    const g = heldObject;
+    camera.remove(g.object);                // toglilo dalla mano
+    g.object.scale.copy(g.worldScale);      // ripristina la scala "nel mondo"
+    g.object.rotation.set(0, 0, 0);         // niente piu' rotazione "in mano"
+    g.object.position.set(0, 0.56, -1.3);   // torna sul tavolino, dove stava all'inizio
+    scene.add(g.object);
+    heldObject = null;                      // mani libere
 }
 
 // Quante volte e' stato droppato il telecomando (si azzera al reload della pagina).
@@ -1164,8 +1177,7 @@ function updateInteraction() {
     if (heldObject) {
         // Con qualcosa in mano: solo le azioni dell'oggetto tenuto.
         if (heldObject.tvRemote) {
-            const hits = raycaster.intersectObject(tvScreen);
-            if (hits.length > 0) lookAction = 'tv';          // guardi la TV col telecomando
+            lookAction = 'tv';          // col telecomando in mano la TV si usa da OVUNQUE, senza doverla mirare
         } else if (heldObject.isBook) {
             lookAction = 'book';                             // tieni il libro: aprilo/chiudilo
         }
@@ -1184,7 +1196,7 @@ function updateInteraction() {
         if (!lookAction) {
             for (const s of sittables) {
                 const hits = raycaster.intersectObject(s.object, true);
-                if (hits.length > 0 && hits[0].distance < GRAB_DISTANCE) {
+                if (hits.length > 0 && hits[0].distance < SIT_DISTANCE) {
                     lookAction = 'sit';
                     lookTarget = s;
                     break;
@@ -1426,6 +1438,7 @@ function updateTvZoomOut(delta) {
         pitch = returnState.pitch;
         camera.rotation.set(pitch, yaw, 0, 'YXZ');
         gameState = 'EXPLORE';
+        if (heldObject && heldObject.tvRemote) putAwayRemote();   // posa il telecomando: mani libere per gli oggetti
         startLoop('tvStatic');   // la statica (col suo fruscio) torna in EXPLORE
         showTempTooltip("Well, now that you checked out my work, feel free to play around with the items in my room!");   // uscito dalla TV
     }
